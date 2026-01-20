@@ -1,0 +1,430 @@
+.app {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+}
+
+.app-header {
+  display: none;
+}
+
+/* Map Widget - Compact centered design */
+.map-widget {
+  width: 90%;
+  max-width: 600px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border: 8px solid #18181C;
+  border-radius: 40px;
+  transition: transform 0.1s ease-out;
+  transform-style: preserve-3d;
+  will-change: transform;
+  overflow: hidden;
+}
+
+.shine-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 32px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+  mix-blend-mode: overlay;
+}
+
+.search-container {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: calc(100% - 40px);
+  max-width: 400px;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.map-container {
+  width: 100%;
+  height: 500px;
+  border-radius: 32px;
+  overflow: visible;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  background: #2a2a2a;
+  position: relative;
+}
+
+.weather-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 100;
+  max-width: 200px;
+}
+
+/* Weather Display - Top right info panel */
+.weather-display-container {
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 16px;
+  padding: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.weather-display {
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 1.25rem 1.5rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.weather-display.loading,
+.weather-display.error,
+.weather-display.empty {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100px;
+}
+
+.weather-display.error {
+  background: rgba(80, 30, 30, 0.95);
+}
+
+.error-message {
+  color: #ff6b6b;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.spinner {
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-left-color: #fff;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+  margin-bottom: 0.75rem;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.location-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.location-info h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+  flex: 1;
+}
+
+.location-address {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 0.75rem;
+}
+
+.time-info {
+  display: none;
+}
+
+.time-display {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.weather-info-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+}
+
+.temperature-compact {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.weather-emoji {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.temp-value-compact {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+
+.weather-description-compact {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: capitalize;
+  font-weight: 400;
+}
+
+.weather-info {
+  display: none;
+}
+
+.temperature {
+  display: none;
+}
+
+.temp-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+}
+
+.temp-unit {
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.weather-description {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: left;
+}
+
+.weather-details {
+  display: none;
+}
+
+.weather-details .detail {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+}
+
+.weather-details .label {
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.weather-details .value {
+  font-weight: 500;
+  color: #fff;
+}
+
+/* Geocoder Styles - Bottom search bar */
+.mapboxgl-ctrl-geocoder {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  border-radius: 16px;
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100% !important;
+  max-width: 100% !important;
+  position: relative;
+}
+
+.mapboxgl-ctrl-geocoder--input {
+  height: 48px;
+  padding: 0 3rem 0 1rem !important;
+  font-size: 0.95rem;
+  color: #fff !important;
+  background: transparent;
+  border: none;
+}
+
+.mapboxgl-ctrl-geocoder--input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.mapboxgl-ctrl-geocoder--icon-search {
+  fill: rgba(255, 255, 255, 0.6);
+  right: 12px;
+  left: auto;
+  width: 20px;
+  height: 20px;
+  top: 14px;
+}
+
+.mapboxgl-ctrl-geocoder--button {
+  display: none !important;
+}
+
+.mapboxgl-ctrl-geocoder--icon-close {
+  display: none !important;
+}
+
+.mapboxgl-ctrl-geocoder--icon-loading {
+  right: 12px;
+  left: auto;
+}
+
+/* Suggestions dropdown - show above search bar */
+.mapboxgl-ctrl-geocoder .suggestions,
+.mapboxgl-ctrl-geocoder--suggestions {
+  position: absolute !important;
+  bottom: calc(100% + 8px) !important;
+  top: auto !important;
+  left: 0 !important;
+  right: 0 !important;
+  background: #18181C !important;
+  background-color: #18181C !important;
+  border-radius: 16px !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4) !important;
+  max-height: 180px !important;
+  overflow-y: auto !important;
+  z-index: 10000 !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.mapboxgl-ctrl-geocoder .suggestions > li > a,
+.mapboxgl-ctrl-geocoder--suggestion {
+  background: #18181C !important;
+  background-color: #18181C !important;
+  color: #fff !important;
+  padding: 0.75rem 1rem !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+  cursor: pointer !important;
+}
+
+.mapboxgl-ctrl-geocoder .suggestions > li:first-child > a,
+.mapboxgl-ctrl-geocoder--suggestion:first-child {
+  border-top-left-radius: 16px !important;
+  border-top-right-radius: 16px !important;
+}
+
+.mapboxgl-ctrl-geocoder .suggestions > li:last-child > a,
+.mapboxgl-ctrl-geocoder--suggestion:last-child {
+  border-bottom: none !important;
+  border-bottom-left-radius: 16px !important;
+  border-bottom-right-radius: 16px !important;
+}
+
+.mapboxgl-ctrl-geocoder .suggestions > .active > a,
+.mapboxgl-ctrl-geocoder .suggestions > li > a:hover,
+.mapboxgl-ctrl-geocoder--suggestion:hover,
+.mapboxgl-ctrl-geocoder--suggestion.active {
+  background: rgba(60, 60, 60, 0.6) !important;
+  background-color: rgba(60, 60, 60, 0.6) !important;
+}
+
+.mapboxgl-ctrl-geocoder--suggestion-title {
+  color: #fff !important;
+  font-weight: 500 !important;
+}
+
+.mapboxgl-ctrl-geocoder--suggestion-address {
+  color: rgba(255, 255, 255, 0.6) !important;
+  font-size: 0.85rem !important;
+}
+
+/* Close button removed */
+
+/* Hide Mapbox logo and attribution */
+.mapboxgl-ctrl-logo,
+.mapboxgl-ctrl-attrib-button,
+.mapboxgl-ctrl-attrib {
+  display: none !important;
+}
+
+/* Custom Map Marker - Blue dot with glow */
+.custom-marker {
+  width: 80px;
+  height: 80px;
+  position: relative;
+  cursor: pointer;
+}
+
+.marker-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(74, 144, 226, 0.4) 0%, rgba(74, 144, 226, 0) 70%);
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.marker-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  background: #4A90E2;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(74, 144, 226, 0.6),
+              0 0 40px rgba(74, 144, 226, 0.4);
+  border: 4px solid rgba(255, 255, 255, 0.9);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .map-widget {
+    width: 95%;
+    max-width: none;
+  }
+
+  .map-container {
+    height: 600px;
+    border-radius: 24px;
+  }
+
+  .weather-display {
+    padding: 1rem 1.25rem;
+  }
+
+  .location-info h2 {
+    font-size: 1rem;
+  }
+}
