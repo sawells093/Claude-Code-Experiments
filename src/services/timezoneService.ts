@@ -1,4 +1,4 @@
-import { format, addSeconds } from 'date-fns';
+import { format } from 'date-fns';
 
 /**
  * Calculate the local time at a location given its timezone offset

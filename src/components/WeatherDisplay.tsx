@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { WeatherData } from '../types';
 import { getLocalDateTime } from '../services/timezoneService';
-import { getWeatherIconUrl } from '../services/weatherService';
 
 // Map weather descriptions to emojis
 const getWeatherEmoji = (description: string): string => {
@@ -26,7 +25,6 @@ interface WeatherDisplayProps {
 }
 
 export default function WeatherDisplay({
-  locationName,
   weather,
   loading,
   error,
@@ -70,11 +68,6 @@ export default function WeatherDisplay({
   if (!weather || !currentTime) {
     return null; // Don't show anything when no location selected
   }
-
-  // Extract city and distance from location name
-  const locationParts = locationName.split(',');
-  const city = locationParts[0]?.trim() || locationName;
-  const address = locationParts.slice(1).join(',').trim() || '';
 
   const weatherEmoji = getWeatherEmoji(weather.description);
 
