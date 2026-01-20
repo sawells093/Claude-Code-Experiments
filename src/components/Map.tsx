@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import mapboxgl from 'mapbox-gl';
+import * as mapboxgl from 'mapbox-gl';
 import type { Location } from '../types';
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_ACCESS_TOKEN;
